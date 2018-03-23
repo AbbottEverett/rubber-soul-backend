@@ -6,7 +6,7 @@ function getAllShoes(req, res, next) {
             res.status(200).json({ data: shoes });
         })
         .catch(err => {
-            next({ status: 404, message: err });
+            next({ status: 500, message: 'Internal Server Error' });
         });
 }
 

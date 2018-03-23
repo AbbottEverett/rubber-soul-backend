@@ -48,20 +48,45 @@ function getAllShoes () {
                     shoesArr[currentId-1].sizes = sizes;
                 }
                 return shoesArr;
-            })
-            .catch(err => {
-                console.log(err);
             });
-        
 }
 
 function getShoeById(id) {
-    return knex('shoes')
-        .where({ id: id })
-        .first();
+    let shoeTags;
+    let shoeSizes;
+    return knex('shoes_tags')
+        .where({ shoe_id: id})
+        .innerJoin('tags', 'shoes_tags.tag_id', 'tags.id')
+        .select('shoe_id', 'name')
+        .then(res => {
+            shoeTags = res;
+            return knex('shoes_sizes')
+                .where({ shoe_id: id })
+                .innerJoin('sizes', 'shoes_sizes.size_id', 'sizes.id')
+                .select('shoe_id', 'size', 'qty');
+        })
+        .then(res => {
+            shoeSizes = res;
+            return knex('shoes')
+                .where({ id: id })
+                .first();
+        })
+        .then(res => {
+            if (!res) throw 'Invalid shoe id';
+            let shoeData = {...res};
+            let tags = [];
+            let sizes = [];
+            shoeTags.forEach(shoeTag => {
+                tags.push(shoeTag.name);
+            })
+            shoeSizes.forEach(shoeSize => {
+                let data = { [shoeSize.size]: shoeSize.qty };
+                sizes.push(data);
+            });
+            shoeData.tags = tags;
+            shoeData.sizes = sizes;
+            return shoeData;
+        });
 }
-
-getAllShoes();
-
 
 module.exports = { getAllShoes, getShoeById };
