@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
         table.integer('star_count').notNullable();
         table.integer('thumbs_up').notNullable();
         table.integer('thumbs_down').notNullable();
+        table.timestamps(true, true);
       });
 };
 
