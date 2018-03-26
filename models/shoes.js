@@ -1,8 +1,11 @@
 const knex = require('../db/knex');
+const reviews = require('./reviews');
 
 function getAllShoes () {
     let shoeTags;
     let shoeSizes;
+    let reviewScores;
+    let allShoes;
     return knex('shoes_tags')
             .innerJoin('tags', 'shoes_tags.tag_id', 'tags.id')
             .orderBy('shoe_id')
@@ -18,6 +21,19 @@ function getAllShoes () {
                 shoeSizes = res;
                 return knex('shoes')
                         .orderBy('id');
+            })
+            .then(res => {
+                allShoes = res;
+                const avgRating = res.map(shoe => {
+                    return reviews.getAverageReviewScoreById(shoe.id);
+                });
+                return Promise.all(avgRating);
+            })
+            .then(res => {
+                res.forEach((rating, i) => {
+                    allShoes[i].avg_star_count = rating.avg;
+                });
+                return allShoes;
             })
             .then(res => {
                 let shoesArr = [...res];
@@ -54,6 +70,7 @@ function getAllShoes () {
 function getShoeById(id) {
     let shoeTags;
     let shoeSizes;
+    let allReviews;
     return knex('shoes_tags')
         .where({ shoe_id: id})
         .innerJoin('tags', 'shoes_tags.tag_id', 'tags.id')
@@ -67,6 +84,10 @@ function getShoeById(id) {
         })
         .then(res => {
             shoeSizes = res;
+            return reviews.getAllReviewsById(id);
+        })
+        .then(res => {
+            allReviews = res;
             return knex('shoes')
                 .where({ id: id })
                 .first();
@@ -85,6 +106,7 @@ function getShoeById(id) {
             });
             shoeData.tags = tags;
             shoeData.sizes = sizes;
+            shoeData.reviews = allReviews;
             return shoeData;
         });
 }

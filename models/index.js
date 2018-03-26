@@ -1,3 +1,4 @@
 module.exports = {
-    shoes: require('./shoes')
+    shoes: require('./shoes'),
+    reviews: require('./reviews')
 };
