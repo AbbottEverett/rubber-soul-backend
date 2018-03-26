@@ -20,4 +20,40 @@ function getShoeById(req, res, next) {
         });
 }
 
-module.exports = { getAllShoes, getShoeById };
+function getAllBrands(req, res, next) {
+  return model.shoes.getAllBrands()
+  .then(brands => {
+      res.status(200).json({ data: brands });
+  })
+  .catch(err => {
+      next({ status: 404, message: err });
+  });
+}
+
+function getAllTags(req, res, next) {
+  return model.shoes.getAllTags()
+  .then(tags => {
+      res.status(200).json({ data: tags });
+  })
+  .catch(err => {
+      next({ status: 404, message: err });
+  });
+}
+
+function getAllSizes(req, res, next) {
+  return model.shoes.getAllSizes()
+  .then(sizes => {
+      res.status(200).json({ data: sizes });
+  })
+  .catch(err => {
+      next({ status: 404, message: err });
+  });
+}
+
+module.exports = {
+  getAllShoes,
+  getShoeById,
+  getAllBrands,
+  getAllTags,
+  getAllSizes 
+};

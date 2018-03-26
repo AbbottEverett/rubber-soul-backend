@@ -111,4 +111,38 @@ function getShoeById(id) {
         });
 }
 
-module.exports = { getAllShoes, getShoeById };
+function getAllBrands() {
+  return knex('shoes')
+    .count('shoes.id')
+    .groupBy('brand')
+    .orderBy('count', 'desc')
+    .select('brand')
+  .then(result => {
+    const brands = result.map(el => el.brand);
+    return brands;
+  });
+}
+
+function getAllTags() {
+  return knex('tags').orderBy('tags.name')
+  .then(result => {
+    const tags = result.map(el => el.name);
+    return tags;
+  });
+}
+
+function getAllSizes() {
+  return knex('sizes').orderBy('size', 'asc')
+  .then(result => {
+    const sizes = result.map(el => el.size);
+    return sizes;
+  });
+}
+
+module.exports = {
+  getAllShoes,
+  getShoeById,
+  getAllBrands,
+  getAllTags,
+  getAllSizes
+};
