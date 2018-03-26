@@ -5,9 +5,11 @@ const bodyParser = require('body-parser');
 // const knex = require('./db');
 // const masterRoute = require('./src/routes/master');
 const cors = require('cors');
+const morgan = require('morgan');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 
 const routes = require('./routes');
 
@@ -18,13 +20,13 @@ app.use((err, req, res, next) => {
     console.log(err);
     res.status(status).json({ error: err });
   });
-  
+
   app.use((req, res, next) => {
     res.status(404).json({ error: { message: 'Route not found!' }});
   });
-  
+
   function listener() {
     console.log(`Listening on port ${port}...`);
   }
-  
+
   app.listen(port, listener);
