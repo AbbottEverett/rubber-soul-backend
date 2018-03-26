@@ -2,7 +2,21 @@ const knex = require('../db/knex');
 
 function getAllReviewsById(id) {
     return knex('reviews')
-        .where({ shoe_id: id });
+        .where({ shoe_id: id })
+        .join('users', 'users.id', '=', 'user_id')
+        .select(
+          'reviews.id as review_id',
+          'user_id',
+          'first_name',
+          'last_name',
+          'title',
+          'content',
+          'star_count',
+          'updated_at',
+          'thumbs_up',
+          'thumbs_down'
+        )
+        .orderBy('updated_at', 'desc');
 }
 
 function getAverageReviewScoreById(id) {
@@ -11,7 +25,5 @@ function getAverageReviewScoreById(id) {
         .where({ shoe_id: id})
         .first();
 }
-
-getAverageReviewScoreById(2);
 
 module.exports = { getAllReviewsById, getAverageReviewScoreById };

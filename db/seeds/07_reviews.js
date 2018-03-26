@@ -1,4 +1,4 @@
-const reviews = require('../seedData/reviews.json');
+const reviews = require('../seedData/reviewsWithRandomDates');
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
