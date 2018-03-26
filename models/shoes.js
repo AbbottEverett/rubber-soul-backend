@@ -139,10 +139,23 @@ function getAllSizes() {
   });
 }
 
+function getAllColors() {
+  return knex('shoes')
+  .count('color')
+  .groupBy('color')
+  .orderBy('count', 'desc')
+  .select('color')
+  .then(result => {
+    const colors = result.map(el => el.color);
+    return colors;
+  })
+}
+
 module.exports = {
   getAllShoes,
   getShoeById,
   getAllBrands,
   getAllTags,
-  getAllSizes
+  getAllSizes,
+  getAllColors
 };
