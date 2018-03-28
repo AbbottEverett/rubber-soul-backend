@@ -81,5 +81,3 @@ module.exports = {
   getCartById,
   updateCart
 };
-
-updateCart(1, { shoe_id: 1, size: 9, qty: 0 }).then(res => console.log(res));
