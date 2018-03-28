@@ -24,12 +24,12 @@ function signup(user) {
                 .returning('*');
          })
          .then(user => {
-            validUser = user;
-            return carts.createCart(user.id);
+            validUser = user[0];
+            return carts.createCart(user[0].id);
          })
          .then(cart => {
             console.log(cart);
-            return { user_id: validUser[0].id, cart_id: cart[0].id };
+            return { user_id: validUser.id, cart_id: cart[0].id };
          });
 }
 
