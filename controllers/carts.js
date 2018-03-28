@@ -11,7 +11,7 @@ function getCartById(req, res, next) {
 }
 
 function updateCart(req, res, next) {
-  return model.carts.updateCart(req,params.id, req.body)
+  return model.carts.updateCart(req.params.id, req.body)
     .then(cart => {
       res.status(200).json({ data: cart });
     })
