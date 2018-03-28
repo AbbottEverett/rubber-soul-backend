@@ -8,7 +8,7 @@ const morgan = require('morgan');
 // Sets up enviroment variables for config
 require('dotenv').config();
 
-app.use(cors());
+app.use(cors({ exposedHeaders: 'Auth' }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
