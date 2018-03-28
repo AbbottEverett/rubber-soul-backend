@@ -1,4 +1,4 @@
-const users = require('../seedData/users.json');
+const users = require('../seedData/usersHashed.json');
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
