@@ -1,28 +1,34 @@
 const fs = require('fs');
 const shoes_sizes = require('../shoes_sizes.json');
-const shoes = require('../shoes.json');
 
 const inventory = shoes_sizes.filter(shoe_size => {
-    return shoe_size.qty > 0;
+    return shoe_size.qty;
 });
 
-let cart_shoe_sizes = []
-let count = 0;
+let cartItems = []
 
-for (let i = 1; i < 31; i++) {
-    let itemCount = Math.floor(Math.random() * 5)
-    for (let j = 0; j < itemCount; j++) {
-        let shoe_size_check = inventory[count+j];
-        console.log(shoe_size_check)
-        let cart_shoe_size = {
-            id: cart_shoe_sizes+1,
-            cart_id: i,
-            shoe_size_id: count+j+1,
-        } 
-    }
-    count = itemCount;
-    
+for (let i = 1; i < 61; i++) {
+  const cartItem = {
+    id: i,
+    cart_id: Math.ceil(Math.random()*30),
+    cart_qty: 1
+  }
+  let randomProductId = Math.floor(Math.random()*inventory.length);
+  let randomProduct = inventory[randomProductId];
+
+  while (
+    cartItems.some(item => item.inventory_id === randomProduct.id) ||
+    !randomProduct.qty
+  ) {
+    randomProductId = Math.floor(Math.random()*inventory.length);
+    randomProduct = inventory[randomProductId];
+  }
+
+  cartItem.inventory_id = randomProduct.id;
+  randomProduct.qty--;
+  cartItems.push(cartItem);
 }
 
-
-
+fs.writeFile('cartItems.json', JSON.stringify(cartItems), () => {
+  console.log('File was written.');
+});

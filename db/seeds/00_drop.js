@@ -1,9 +1,15 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('shoes_tags').del()
+  return knex('carts_shoes_sizes').del()
+    .then(() => {
+      return knex('shoes_tags').del()
+    })
     .then(() => {
       return knex('shoes_sizes').del();
+    })
+    .then(() => {
+      return knex('carts').del();
     })
     .then(() => {
       return knex('tags').del();

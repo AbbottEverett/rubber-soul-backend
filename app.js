@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 const routes = require('./routes');
 
 app.use('/api/shoes', routes.shoes);
+app.use('/api/carts', routes.carts);
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;

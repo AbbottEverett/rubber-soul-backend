@@ -1,3 +1,4 @@
 module.exports = {
-    shoes: require('./shoes')
+    shoes: require('./shoes'),
+    carts: require('./carts')
 };
