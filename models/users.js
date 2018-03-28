@@ -6,51 +6,51 @@ function getUserByEmail(email) {
     return knex('users')
         .select('*')
         .where('email', email)
-        .first()
-        .then(user => {
-            return user;
-        });
+        .first();
 }
 
 function signup(user) {
     return getUserByEmail(user.email)
          .then(existingUser => {
-            // if (existingUser) throw 'User already exists';
-            return bcrypt.hash(user.password, process.env.WORK_FACTOR || 10);
+            if (existingUser) throw 'User already exists';
+            return bcrypt.hash(user.password, process.env.WORK_FACTOR);
          })
          .then(hashedPassword => {
             user.password = hashedPassword;
-            return user;
-         });
-         
+            return knex('users')
+                .insert(user)
+                .returning('*');
+         })
 }
 
 function login(email, password) {
     let validUser;
+    let claim;
     return getUserByEmail(email)
         .then(user => {
             if (!user) throw 'Please enter a valid username';
             validUser = user;
             return bcrypt.compare(password, user.password);
         }) 
+        .then(passwordIsValid => {
+            if (!passwordIsValid) throw 'Invalid password provided';
+            claim = { user_id: validUser.id, cart_id: null };
+            return knex('carts')
+                .where('user_id', validUser.id)
+                .where('is_completed', false)
+                .first();
+         })
+         .then(userCart => {
+            //  if (userCart) {
+            //      claim.cart_id = userCart.id
+            //  }
+            
+            // import cart logic and modify token to reflect changes
+            const token = jwt.sign(claim, process.env.JWT_SECRET, { expiresIn: Date.now() + 2419200 });
+            return { token, claim };
+         });
 }
 
-let dummyEmail = "Cleta.Cremin@gmail.com";
-let testSignup = "severettabbott@gmail.com";
-let dummyUser = {
-    email: dummyEmail,
-    password: 'snzmT5Nx1_ovVpM'
+module.exports = {
+    signup, login
 };
-let testUser = {
-    email: testSignup,
-    password: "mynewpassword"
-};
-signup(dummyUser)
-    .then(user => {
-        console.log(user);
-    })
-
-// login(dummyUser.email, dummyUser.password)
-//     .then(result => {
-//         console.log(result);
-//     })
