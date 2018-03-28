@@ -1,6 +1,7 @@
 const knex = require('../db/knex');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const carts = require('./carts');
 
 function getUserByEmail(email) {
     return knex('users')
@@ -10,6 +11,7 @@ function getUserByEmail(email) {
 }
 
 function signup(user) {
+    let validUser;
     return getUserByEmail(user.email)
          .then(existingUser => {
             if (existingUser) throw 'User already exists';
@@ -21,6 +23,14 @@ function signup(user) {
                 .insert(user)
                 .returning('*');
          })
+         .then(user => {
+            validUser = user;
+            return carts.createCart(user.id);
+         })
+         .then(cart => {
+            console.log(cart);
+            return { user_id: validUser[0].id, cart_id: cart[0].id };
+         });
 }
 
 function login(email, password) {
@@ -37,15 +47,11 @@ function login(email, password) {
             claim = { user_id: validUser.id, cart_id: null };
             return knex('carts')
                 .where('user_id', validUser.id)
-                .where('is_completed', false)
+                .andWhere('is_completed', false)
                 .first();
          })
          .then(userCart => {
-            //  if (userCart) {
-            //      claim.cart_id = userCart.id
-            //  }
-            
-            // import cart logic and modify token to reflect changes
+            claim.cart_id = userCart.id;
             const token = jwt.sign(claim, process.env.JWT_SECRET, { expiresIn: Date.now() + 2419200 });
             return { token, claim };
          });

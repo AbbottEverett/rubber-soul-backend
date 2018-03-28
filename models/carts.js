@@ -1,7 +1,7 @@
 const knex = require('../db/knex');
 
-function createCart(userId = null) {
-  return knex('carts').insert({ userId });
+function createCart(user_id = null) {
+  return knex('carts').insert({ user_id }).returning('*');
 }
 
 function getCartById(id) {
@@ -79,5 +79,6 @@ function completeCart(id, cart) {
 
 module.exports = {
   getCartById,
-  updateCart
+  updateCart,
+  createCart
 };

@@ -6,9 +6,8 @@ function signup (req, res, next) {
         return next({ status: 400, message: 'Missing signup fields.' });
     }
     return model.users.signup(req.body)
-        .then(newUser => {
-            const data = newUser[0];
-            return res.status(200).json({ data });
+        .then(newUserPayload => {
+            return res.status(200).json({ data: newUserPayload });
         })
         .catch(err => {
             console.log(err);

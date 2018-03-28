@@ -3,6 +3,11 @@ const users = require('../seedData/usersHashed.json');
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('users').del()
+    .then(() => {
+      return knex.raw(
+        "SELECT setval('users_id_seq', 1, FALSE);"
+      );
+    })
     .then(function () {
       // Inserts seed entries
       return knex('users').insert(users);
