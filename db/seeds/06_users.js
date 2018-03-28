@@ -2,14 +2,14 @@ const users = require('../seedData/usersHashed.json');
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('reviews').del()
+  return knex('users').del()
     .then(function () {
       // Inserts seed entries
-      return knex.raw(
-        "ALTER SEQUENCE shoes_id_seq RESTART WITH 1;"
-      );
+      return knex('users').insert(users);
     })
     .then(() => {
-      return knex('users').insert(users);
+      return knex.raw(
+        "SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"
+      );
     });
 };

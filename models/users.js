@@ -13,7 +13,7 @@ function signup(user) {
     return getUserByEmail(user.email)
          .then(existingUser => {
             if (existingUser) throw 'User already exists';
-            return bcrypt.hash(user.password, process.env.WORK_FACTOR);
+            return bcrypt.hash(user.password, parseInt(process.env.WORK_FACTOR));
          })
          .then(hashedPassword => {
             user.password = hashedPassword;

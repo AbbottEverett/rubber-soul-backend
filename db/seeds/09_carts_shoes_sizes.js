@@ -9,11 +9,11 @@ exports.seed = function(knex, Promise) {
   return knex('carts_shoes_sizes').del()
     .then(function () {
       // Inserts seed entries
-      return knex.raw(
-        "ALTER SEQUENCE shoes_id_seq RESTART WITH 1;"
-      );
+      return knex('carts_shoes_sizes').insert(cartItemsWithoutIds);
     })
     .then(() => {
-      return knex('carts_shoes_sizes').insert(cartItemsWithoutIds);
+      return knex.raw(
+        "SELECT setval('carts_shoes_sizes_id_seq', (SELECT MAX(id) FROM carts_shoes_sizes));"
+      );
     });
 };

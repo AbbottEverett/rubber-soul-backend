@@ -5,11 +5,11 @@ exports.seed = function(knex, Promise) {
   return knex('shoes_tags').del()
     .then(function () {
       // Inserts seed entries
-      return knex.raw(
-        "ALTER SEQUENCE shoes_tags_id_seq RESTART WITH 1;"
-      );
+      return knex('shoes_tags').insert(shoes_tags);
     })
     .then(() => {
-      return knex('shoes_tags').insert(shoes_tags);
+      return knex.raw(
+        "SELECT setval('shoes_tags_id_seq', (SELECT MAX(id) FROM shoes_tags));"
+      );
     });
 };

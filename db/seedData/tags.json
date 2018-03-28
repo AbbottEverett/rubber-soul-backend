@@ -1,1 +1,29 @@
-[{"id":1,"name":"velcro"},{"id":2,"name":"downturned"},{"id":3,"name":"lace-up"},{"id":4,"name":"no-edge"},{"id":5,"name":"slipper"},{"id":6,"name":"soft"},{"id":7,"name":"flat"},{"id":8,"name":"stiff"},{"id":9,"name":"women's"}]
+[
+    {
+        "name": "velcro"
+    },
+    {
+        "name": "downturned"
+    },
+    {
+        "name": "lace-up"
+    },
+    {
+        "name": "no-edge"
+    },
+    {
+        "name": "slipper"
+    },
+    {
+        "name": "soft"
+    },
+    {
+        "name": "flat"
+    },
+    {
+        "name": "stiff"
+    },
+    {
+        "name": "women's"
+    }
+]

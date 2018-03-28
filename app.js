@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 
 const routes = require('./routes');
 
+app.use('/user', routes.users);
 app.use('/api/shoes', routes.shoes);
 app.use('/api/carts', routes.carts);
 
