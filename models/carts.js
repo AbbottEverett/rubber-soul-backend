@@ -26,8 +26,8 @@ function getCartById(id) {
 }
 
 function updateCart(cart_id, item) {
-  if (!cart_id) {
-    createCart().then(cart => updateCart(cart.id, item));
+  if (cart_id === "null") {
+    return createCart().then(cart => updateCart(cart[0].id, item));
   } else {
     let inventory_id;
     return knex('sizes')
@@ -43,7 +43,6 @@ function updateCart(cart_id, item) {
     .then(inventory => {
       inventory_id = inventory.id;
       if (item.qty) {
-        console.log('Item qty is greater than 0')
         return knex('carts_shoes_sizes')
           .where({ cart_id, inventory_id })
           .first()
