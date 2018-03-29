@@ -17,6 +17,7 @@ const routes = require('./routes');
 app.use('/user', routes.users);
 app.use('/api/shoes', routes.shoes);
 app.use('/api/carts', routes.carts);
+app.use('/api/reviews', routes.reviews);
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;
