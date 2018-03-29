@@ -28,7 +28,6 @@ function signup(user) {
             return carts.createCart(user[0].id);
          })
          .then(cart => {
-            console.log(cart);
             return { user_id: validUser.id, cart_id: cart[0].id };
          });
 }
