@@ -10,6 +10,13 @@ function getUserByEmail(email) {
         .first();
 }
 
+function getUserById(id) {
+    return knex('users')
+        .select('*')
+        .where('id', id)
+        .first();
+}
+
 function signup(user) {
     let validUser;
     return getUserByEmail(user.email)
@@ -57,5 +64,5 @@ function login(email, password) {
 }
 
 module.exports = {
-    signup, login
+    signup, login, getUserById
 };

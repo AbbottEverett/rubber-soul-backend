@@ -29,4 +29,14 @@ function login (req, res, next) {
         });
 }
 
-module.exports = { signup, login };
+function getUserById(req, res, next) {
+    return model.users.getUserById(req.params.id)
+        .then(user => {
+            return res.status(200).json({ data: user });
+        })
+        .catch(err => {
+          return next({ status: 404, message: 'User not found' })  
+        });
+}
+
+module.exports = { signup, login, getUserById };
