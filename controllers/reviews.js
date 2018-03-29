@@ -13,15 +13,3 @@ function createReview(req, res, next) {
 module.exports = {
   createReview
 };
-
-
-// {
-//   star_count,
-//   title,
-//   content,
-//   first_name,
-//   last_name,
-//   shoe_id,
-//   thumbs_up,
-//   thumbs_down,
-// }
