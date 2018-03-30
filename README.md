@@ -5,6 +5,8 @@
 
 Rubber Soul is an e-commerce site for popular rock climbing shoes. It allows users to search and filter available shoes, and sign up or login to purchase a shoe. Once authenticated, users can add, remove, and checkout items from their cart, as well as submit shoe reviews.
 
+RubberSoul was built in 1.5 weeks.
+
 
 ### Live URL: http://rubbersoul.surge.sh/
 #### Frontend GitHub: https://github.com/jdeam/rubber-soul-frontend
