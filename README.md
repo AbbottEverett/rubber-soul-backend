@@ -48,5 +48,5 @@ RubberSoul was built in 1.5 weeks.
 ![Submit New Review Image](screenshots/rubber_soul_submit_review.png)
 
 ### Cart/Checkout:
-![Shopping Cart Image 1](screenshots/rubber_soul_cart_dropdown.png)
-![Checkout Image](rubber_soul_checkout.png)
+![Cart Image](screenshots/rubber_soul_cart_dropdown.png)
+![Checkout Image](screenshots/rubber_soul_checkout.png)
