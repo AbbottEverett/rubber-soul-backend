@@ -20,7 +20,19 @@ function updateCart(req, res, next) {
     });
 }
 
+function completeCart(req, res, next) {
+  let { user_id, cart_id } = req.body;
+  return model.carts.completeCart(user_id, cart_id)
+    .then(payload => {
+      res.status(200).json({ data: payload[0] });
+    })
+    .catch(err => {
+      next({ status: 400, message: err});
+    })
+}
+
 module.exports = {
   getCartById,
-  updateCart
+  updateCart,
+  completeCart
 };

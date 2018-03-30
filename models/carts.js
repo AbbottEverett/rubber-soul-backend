@@ -1,4 +1,5 @@
 const knex = require('../db/knex');
+const inventory = require('./inventory')
 
 function createCart(user_id = null) {
   return knex('carts').insert({ user_id }).returning('*');
@@ -72,12 +73,55 @@ function updateCart(cart_id, item) {
   }
 }
 
-function completeCart(id, cart) {
-
+function completeCart(user_id, cart_id) {
+  let cartItems;
+  let inventoryForItems;
+  return getCartById(cart_id)
+    .then(res => {
+      let inventoryPromises = []
+      cartItems = res.items;
+      cartItems.forEach(item => {
+        let inventoryProm = inventory.getInventoryCount(item.shoe_id, item.size);
+        inventoryPromises.push(inventoryProm);
+      });
+      return Promise.all(inventoryPromises);
+    })
+    .then(res => {
+      inventoryForItems = res;
+      let cartIsValid = true;
+      let invalidItem;
+      inventoryForItems.forEach((invItem, i) => {
+        if (invItem.qty < cartItems[i].cart_qty) {
+          cartIsValid = false;
+          invalidItem = cartItems[i];
+          return;
+        }
+      });
+      console.log(invalidItem);
+      if (!cartIsValid) throw Error(`Not enough inventory for shoe_id: ${invalidItem.shoe_id}, size: ${invalidItem.size}`)
+      return knex('carts')
+          .where('id', cart_id)
+          .update({ is_completed: true });
+    })
+    .then(res => {
+      let newInventoryProms = [];
+      cartItems.forEach(item => {
+        let newInvProm = inventory.modifyInventory(item.shoe_id, item.size, item.cart_qty);
+        newInventoryProms.push(newInvProm);
+      })
+      return Promise.all(newInventoryProms);
+    })
+    .then(res => {
+      return createCart(user_id)
+    })
+    .then(res => {
+      return res;
+    })
 }
 
 module.exports = {
   getCartById,
   updateCart,
-  createCart
+  createCart,
+  completeCart
 };
