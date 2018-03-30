@@ -17,7 +17,6 @@ Rubber Soul is an e-commerce site for popular rock climbing shoes. It allows use
 - Managed state through React Redux store
 - Dynamic search and filter
 - Send and retrieve authenticated data from server using REST API
-- Responsive design
 
 ## Technologies
 #### Frontend
@@ -46,9 +45,6 @@ Rubber Soul is an e-commerce site for popular rock climbing shoes. It allows use
 ![Product Reviews Image](screenshots/rubber_soul_product_reviews.png)
 ![Submit New Review Image](screenshots/rubber_soul_submit_review.png)
 
-### Shopping Cart:
+### Cart/Checkout:
 ![Shopping Cart Image 1](screenshots/rubber_soul_cart_dropdown.png)
-<!-- ![Shopping Cart Image 2](rubber_soul_cart_page.png) -->
-
-### Checkout:
-<!-- ![Checkout Image](rubber_soul_checkout.png) -->
+![Checkout Image](rubber_soul_checkout.png)
