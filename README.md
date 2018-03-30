@@ -1,15 +1,17 @@
 # RubberSoul
 
-Rubber Soul is an e-commerce site for popular rock climbing shoes. It allows users search and filter available shoes, and sign up or login to purchase a shoe. Once authenticated, users can add or remove items from their cart, checkout, and submit shoe reviews.
-
 *Authors: [Everett Abbott](https://github.com/AbbottEverett "Everett Abbott's GitHub"), [Angela Ahn](https://github.com/aahn84 "Angela Ahn's GitHub"), and [Jordan Deam](https://github.com/jdeam "Jordan Deam's GitHub")*
+
+
+Rubber Soul is an e-commerce site for popular rock climbing shoes. It allows users to search and filter available shoes, and sign up or login to purchase a shoe. Once authenticated, users can add, remove, and checkout items from their cart, as well as submit shoe reviews.
 
 
 ### Live URL: http://rubbersoul.surge.sh/
 #### Frontend GitHub: https://github.com/jdeam/rubber-soul-frontend
 #### Backend GitHub: https://github.com/AbbottEverett/rubber-soul-backend
 
-<img src="screenshots/rubber_soul_search_filter.gif"> <img src="screenshots/rubber_soul_add_to_cart.gif">
+<img src="screenshots/rubber_soul_search_filter.gif">
+<img src="screenshots/rubber_soul_add_to_cart.gif">
 
 ## Features
 - Managed state through React Redux store
